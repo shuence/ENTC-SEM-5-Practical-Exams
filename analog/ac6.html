@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analog Communication - Practical 6</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Analog Communication - Practical 6</h1>
+      <p class="subtitle">Pulse Amplitude Modulation and Demodulation</p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To study and generate Pulse Amplitude Modulation (PAM) and demodulation using MATLAB software.
+        </p>
+      </section>
+
+      <section>
+        <h2>Theory</h2>
+        <p>
+          Pulse Amplitude Modulation (PAM) is a form of modulation where the amplitude of a series of 
+          pulse signals is varied in proportion to the amplitude of the analog message signal. 
+          It is widely used in communication systems as an intermediate step in digital modulation schemes.
+        </p>
+        <p>
+          <strong>Modulation:</strong> The amplitude of periodic pulses is modulated based on the instantaneous 
+          amplitude of the message signal.
+        </p>
+        <p>
+          <strong>Demodulation:</strong> The original message signal is recovered from the PAM signal, 
+          typically using a low-pass filter to remove high-frequency components.
+        </p>
+      </section>
+
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% MATLAB Code for PAM Modulation and Demodulation
+fs = 10000; % Sampling frequency
+t = 0:1/fs:0.05; % Time vector
+message = sin(2*pi*100*t); % Message signal
+
+% Pulse generation
+pulse_width = 0.001; % Pulse width
+pulse_period = 0.01; % Pulse period
+pulse_train = zeros(size(t));
+for i = 1:length(t)
+    if mod(t(i), pulse_period) < pulse_width
+        pulse_train(i) = 1;
+    end
+end
+
+% PAM modulation
+pam_signal = message .* pulse_train;
+
+% PAM demodulation (envelope detection)
+envelope = abs(hilbert(pam_signal));
+
+% Plotting
+subplot(3,1,1); plot(t, message); title('Message Signal'); xlabel('Time'); ylabel('Amplitude');
+subplot(3,1,2); plot(t, pam_signal); title('PAM Signal'); xlabel('Time'); ylabel('Amplitude');
+subplot(3,1,3); plot(t, envelope); title('Demodulated Signal'); xlabel('Time'); ylabel('Amplitude');
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+
+      <section>
+        <h2>Expected Output</h2>
+        <p>
+          The MATLAB code generates three plots to illustrate the process of PAM modulation and demodulation:
+        </p>
+        <ol>
+          <li>
+            <strong>Message Signal:</strong> The original analog signal to be modulated.
+          </li>
+          <li>
+            <strong>PAM Signal:</strong> The modulated signal with pulse amplitudes proportional to the message signal.
+          </li>
+          <li>
+            <strong>Demodulated Signal:</strong> The recovered signal obtained using envelope detection.
+          </li>
+        </ol>
+        <p>
+          These plots demonstrate how the amplitude of the pulses follows the message signal during modulation 
+          and how the original signal is retrieved during demodulation.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>

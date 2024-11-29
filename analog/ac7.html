@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analog Communication - Practical 7</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Analog Communication - Practical 7</h1>
+      <p class="subtitle">Pulse Width Modulation and Demodulation</p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To study and perform Pulse Width Modulation and demodulation.
+        </p>
+      </section>
+      <section>
+        <h2>Theory</h2>
+        <p>
+          Pulse Width Modulation (PWM) is a technique where the width of the
+          pulses is varied in proportion to the amplitude of the input signal. In
+          this modulation scheme, the signal is encoded by the width of the pulse
+          rather than its amplitude. PWM is often used in power control and signal
+          processing.
+        </p>
+        <p>
+          The demodulation process retrieves the original message signal by
+          decoding the pulse width back to the amplitude. This can be achieved by
+          filtering the PWM signal to recover the original message.
+        </p>
+      </section>
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% PWM Signal
+clc;
+close all;
+clear all;
+t=0:0.0001:1;
+s=sawtooth(2*pi*10*t+pi); % Carrier signal
+m=0.75*sin(2*pi*1*t); % Message signal
+n=length(s);
+for i=1:n
+    if (m(i)>=s(i))
+        pwm(i)=1;
+    elseif (m(i)<=s(i))
+        pwm(i)=0;
+    end
+end
+
+% Plotting
+plot(t,pwm,'g',t,m,'r',t,s,'b');
+ylabel('Amplitude');
+axis([0  1 -1.5 1.5]);
+xlabel('Time index');
+title('PWM Wave');
+grid on;
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+    </main>
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
