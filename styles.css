@@ -117,9 +117,7 @@ button:hover {
     transform: scale(1.05);
 }
 
-
 /* Footer */
-
 footer {
     text-align: center;
     padding: 20px;
@@ -127,4 +125,63 @@ footer {
     color: white;
     margin-top: 30px;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header .subtitle {
+        font-size: 1rem;
+    }
+
+    .card {
+        width: calc(100% - 20px);
+    }
+
+    .cards {
+        gap: 15px;
+    }
+
+    textarea {
+        height: 150px;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    header .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    textarea {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
 }
