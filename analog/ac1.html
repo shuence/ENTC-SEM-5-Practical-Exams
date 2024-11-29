@@ -10,6 +10,20 @@
       rel="stylesheet"
     />
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R70GKNMPMK"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-R70GKNMPMK");
+  </script>
   <body>
     <header>
       <h1>Analog Communication - Practical 1</h1>
@@ -34,18 +48,24 @@
           proportion to the instantaneous amplitude of the message signal.
         </p>
         <p>
-          The <strong>modulation index (m)</strong> determines the extent of 
-          modulation and is defined as the ratio of the amplitude of the 
-          message signal to the amplitude of the carrier signal. The modulation 
-          index influences the characteristics of the AM signal:
+          The <strong>modulation index (m)</strong> determines the extent of
+          modulation and is defined as the ratio of the amplitude of the message
+          signal to the amplitude of the carrier signal. The modulation index
+          influences the characteristics of the AM signal:
         </p>
         <ul>
-          <li><strong>Under-Modulation:</strong> When m &lt; 1, the message is 
-          fully represented in the modulated signal.</li>
-          <li><strong>Perfect Modulation:</strong> When m = 1, the carrier is 
-          fully utilized.</li>
-          <li><strong>Over-Modulation:</strong> When m &gt; 1, distortion 
-          occurs due to overlapping of sidebands.</li>
+          <li>
+            <strong>Under-Modulation:</strong> When m &lt; 1, the message is
+            fully represented in the modulated signal.
+          </li>
+          <li>
+            <strong>Perfect Modulation:</strong> When m = 1, the carrier is
+            fully utilized.
+          </li>
+          <li>
+            <strong>Over-Modulation:</strong> When m &gt; 1, distortion occurs
+            due to overlapping of sidebands.
+          </li>
         </ul>
         <p>
           The demodulation process retrieves the original message signal from
@@ -91,8 +111,8 @@ subplot(3,1,3); plot(t, envelope); title('Demodulated Signal');
           </li>
           <li>
             <strong>Modulated Signal:</strong> A high-frequency carrier wave
-            whose amplitude varies based on the message signal. The variation
-            is governed by the modulation index.
+            whose amplitude varies based on the message signal. The variation is
+            governed by the modulation index.
           </li>
           <li>
             <strong>Demodulated Signal:</strong> The retrieved message signal
@@ -108,7 +128,7 @@ subplot(3,1,3); plot(t, envelope); title('Demodulated Signal');
       </section>
     </main>
     <footer>
-        <p>&copy; 2024 Practical CheatSheet </p>
+      <p>&copy; 2024 Practical CheatSheet</p>
     </footer>
 
     <script>
