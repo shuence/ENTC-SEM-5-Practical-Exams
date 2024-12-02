@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSP Practical - Experiment 9</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R70GKNMPMK"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-R70GKNMPMK");
+  </script>
+  <body>
+    <header>
+      <h1>DSP Practical - Experiment 9</h1>
+      <p class="subtitle">
+        To study and perform various window functions: Rectangular, Hamming, Hanning, and Kaiser
+      </p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To study and perform various window functions, including Rectangular, Hamming, Hanning, and Kaiser windows, using MATLAB.
+        </p>
+      </section>
+
+      <section>
+        <h2>Problem Statement</h2>
+        <p>
+          In this experiment, you will design and analyze different types of window functions and observe their impact on signal processing tasks like filtering.
+        </p>
+      </section>
+
+      <section>
+        <h2>Theory</h2>
+        <p>
+          A window function is used in signal processing to shape the frequency response of filters and to reduce spectral leakage. The following window types are covered in this experiment:
+        </p>
+        <ul>
+          <li><strong>Rectangular Window:</strong> A simple window that gives sharp cutoff but results in spectral leakage.</li>
+          <li><strong>Hamming Window:</strong> A window that reduces spectral leakage compared to the rectangular window, using a weighted cosine function.</li>
+          <li><strong>Hanning Window:</strong> Similar to the Hamming window, but with a different cosine weighting that provides smoother transitions.</li>
+          <li><strong>Kaiser Window:</strong> A more flexible window function with a parameter that allows for control over the trade-off between mainlobe width and sidelobe attenuation.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% MATLAB Code for Various Window Functions
+
+clc;
+close all;
+clear all;
+
+% Window length
+N = 19;
+n = 0:1:N-1;
+
+% Rectangular Window
+Wr = rectwin(N);
+
+% Hamming Window
+Whm = 0.54 - 0.46 * cos(2 * pi * n / (N - 1));
+
+% Hanning Window
+Whn = 0.5 - 0.5 * cos(2 * pi * n / (N - 1));
+
+% Kaiser Window
+Wk = kaiser(N, 4); % Kaiser window with beta=4
+
+% Plotting all windows
+subplot(2, 2, 1);
+stem(Wr);
+title('Rectangular Window');
+
+subplot(2, 2, 2);
+stem(Whm);
+title('Hamming Window');
+
+subplot(2, 2, 3);
+stem(Whn);
+title('Hanning Window');
+
+subplot(2, 2, 4);
+stem(Wk);
+title('Kaiser Window');
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+
+      <section>
+        <h2>Expected Output</h2>
+        <p>
+          The MATLAB code generates four subplots displaying the following window functions:
+        </p>
+        <ol>
+          <li><strong>Rectangular Window:</strong> A simple box-shaped function with constant amplitude.</li>
+          <li><strong>Hamming Window:</strong> A cosine-shaped window that tapers at both ends to reduce side lobes.</li>
+          <li><strong>Hanning Window:</strong> Similar to the Hamming window, but with a different weighting function.</li>
+          <li><strong>Kaiser Window:</strong> A more flexible window that can be tuned to balance mainlobe width and sidelobe suppression.</li>
+        </ol>
+        <p>
+          These plots visually demonstrate the effects of different windowing functions, showcasing their influence on the frequency response and trade-offs in filter design.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Practical CheatSheet</p>
+    </footer>
+
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
