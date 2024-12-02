@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSP Practical - Experiment 8</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R70GKNMPMK"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-R70GKNMPMK");
+  </script>
+  <body>
+    <header>
+      <h1>DSP Practical - Experiment 8</h1>
+      <p class="subtitle">
+        To design an FIR Low-Pass Digital Filter using a Rectangular Window
+      </p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To design a Low-Pass FIR Digital Filter with specific frequency response specifications using the Rectangular Window method.
+        </p>
+      </section>
+
+      <section>
+        <h2>Problem Statement</h2>
+        <p>
+          Design an FIR low-pass digital filter with the following specifications:
+        </p>
+        <pre>
+          H(e^jw) = e^(-jwA), for -π/2 <= w <= π/2
+          H(e^jw) = 0, for π/2 <= w <= π
+        </pre>
+        <p>
+          The filter length is given as N = 7, and the Rectangular Window is used for the design.
+        </p>
+      </section>
+
+      <section>
+        <h2>Theory</h2>
+        <p>
+          The design of an FIR filter using the Rectangular Window method involves multiplying the ideal impulse response of the filter by a rectangular window function. This approach results in a filter that satisfies the desired frequency response specifications. The process includes:
+        </p>
+        <ol>
+          <li>Define the desired cutoff frequency and the length of the filter.</li>
+          <li>Calculate the ideal filter response using the sinc function.</li>
+          <li>Apply the rectangular window to the ideal filter response.</li>
+          <li>Use the `freqz` function to compute and plot the frequency response of the designed filter.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% MATLAB Code for FIR Low-Pass Filter Design using Rectangular Window
+
+clc;
+clear all;
+close all;
+
+% Given Specifications
+Wc = pi / 2;    % Cutoff frequency (rad/sample)
+N = 7;          % Filter length
+A = (N - 1) / 2; % Center of the window
+n = 0:N-1;      % Index vector
+
+% Rectangular Window
+Wr = rectwin(N);
+
+% Ideal low-pass filter impulse response (sinc function)
+Hn = sin(Wc * (n - A)) / (pi * (n - A));
+
+% Apply the Rectangular Window to the ideal impulse response
+H = Hn .* Wr;
+
+% Frequency response of the designed filter
+w = 0:0.01:pi;   % Frequency range from 0 to pi
+Hf = freqz(H, 1, w);  % Frequency response of the filter
+
+% Plot the magnitude response
+Hmag = abs(Hf);  % Magnitude of the frequency response
+plot(w / pi, Hmag);  % Plot normalized magnitude response
+title('Magnitude Response of FIR Low-Pass Filter Design Using Rectangular Window');
+xlabel('Normalized Frequency (w / π)', 'fontweight', 'b');
+ylabel('Magnitude |H(e^jw)|', 'fontweight', 'b');
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+
+      <section>
+        <h2>Expected Output</h2>
+        <p>
+          The MATLAB code generates a plot showing the magnitude response of the designed FIR low-pass filter. The expected output should display:
+        </p>
+        <ol>
+          <li>A low-pass filter with a passband from -π/2 to π/2 and a stopband from π/2 to π.</li>
+          <li>A magnitude response that closely approximates the ideal filter response, with the transition between passband and stopband clearly visible.</li>
+        </ol>
+        <p>
+          The use of the rectangular window will introduce some ripple in the stopband, and the transition band will not be as sharp as in other window methods like the Hamming or Blackman-Harris window.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Practical CheatSheet</p>
+    </footer>
+
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
