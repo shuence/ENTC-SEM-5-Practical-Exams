@@ -57,24 +57,21 @@
         <h2>MATLAB Code</h2>
         <textarea readonly>
 % MATLAB Code for Pre-emphasis and De-emphasis
-fs = 10000; % Sampling frequency
-t = 0:1/fs:0.1; % Time vector
-
-% Message signal
-message = cos(2*pi*100*t) + 0.5*cos(2*pi*1000*t);
-
-% Pre-emphasis filter (high-pass)
-a = [1 -0.95]; % Filter coefficients
-pre_emphasized = filter(a, 1, message);
-
-% De-emphasis filter (low-pass)
-b = [1 -0.95];
-de_emphasized = filter(1, b, pre_emphasized);
-
-% Plotting
-subplot(3, 1, 1); plot(t, message); title('Original Message Signal'); xlabel('Time'); ylabel('Amplitude');
-subplot(3, 1, 2); plot(t, pre_emphasized); title('Pre-emphasized Signal'); xlabel('Time'); ylabel('Amplitude');
-subplot(3, 1, 3); plot(t, de_emphasized); title('De-emphasized Signal'); xlabel('Time'); ylabel('Amplitude');
+f1=10;
+for f=1:50
+x(f)=(1/sqrt(1+(f1/f)^2));
+f2(f)=f;
+end
+subplot(2,1,1);
+plot(f2,x);
+title('pre emphasis waveform');
+for f=1:50
+y(f)=(1/sqrt(1+(f/f1)^2));
+f3(f)=f;
+end
+subplot(2,1,2);
+plot(f3,y);
+title('de emphasis waveform');
         </textarea>
         <button onclick="copyCode()">Copy Code</button>
       </section>
