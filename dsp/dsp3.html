@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSP Practical - Experiment 3</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R70GKNMPMK"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-R70GKNMPMK");
+  </script>
+  <body>
+    <header>
+      <h1>DSP Practical - Experiment 3</h1>
+      <p class="subtitle">
+        To write and perform MATLAB program to find the linear convolution using DFT & IDFT
+      </p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To write and perform a MATLAB program to find the linear convolution of two sequences using Discrete Fourier Transform (DFT) and Inverse Discrete Fourier Transform (IDFT).
+        </p>
+      </section>
+
+      <section>
+        <h2>Problem Statement</h2>
+        <p>
+          Given two sequences: 
+        </p>
+        <pre>
+          x(n) = [1 2 3 4]
+          h(n) = [1 1 1 1]
+        </pre>
+        <p>
+          Find the output of the system using linear convolution, assuming that x(n) is aperiodic.
+        </p>
+      </section>
+
+      <section>
+        <h2>Theory</h2>
+        <p>
+          Linear convolution is the process of computing the output of a system with an input sequence and an impulse response (system response). For two sequences x(n) and h(n), the linear convolution can be calculated using the following steps:
+        </p>
+        <pre>
+          y(n) = IDFT(DFT(x(n)) * DFT(h(n)))
+        </pre>
+        <p>
+          The steps involved in calculating linear convolution using DFT and IDFT are:
+        </p>
+        <ol>
+          <li>Compute the DFT of x(n) and h(n).</li>
+          <li>Multiply the DFTs of x(n) and h(n) element-wise.</li>
+          <li>Compute the IDFT of the product obtained in the previous step.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% MATLAB Code for Linear Convolution using DFT & IDFT
+
+clc;
+clear all;
+close all;
+
+% Input sequences
+x = [1 2 3 4]; % First sequence
+h = [1 1 1 1]; % Second sequence
+
+% Length of the output sequence
+N = length(x) + length(h) - 1;
+
+% Compute DFTs of x(n) and h(n)
+xk = fft(x, N); % DFT of x(n)
+hk = fft(h, N); % DFT of h(n)
+
+% Multiply DFTs element-wise
+yk = xk .* hk;
+
+% Compute IDFT of the product
+y = ifft(yk, N); % Inverse DFT to get the linear convolution result
+
+% Plotting the results
+
+% Plot the first sequence x(n)
+subplot(3, 2, 1);
+stem(x);
+title('First Sequence x(n)');
+xlabel('Discrete Time');
+ylabel('Amplitude');
+
+% Plot the DFT of the first sequence
+subplot(3, 2, 2);
+stem(abs(xk));
+title('DFT of First Sequence');
+xlabel('Discrete Frequency');
+ylabel('Amplitude');
+
+% Plot the second sequence h(n)
+subplot(3, 2, 3);
+stem(h);
+title('Second Sequence h(n)');
+xlabel('Discrete Time');
+ylabel('Amplitude');
+
+% Plot the DFT of the second sequence
+subplot(3, 2, 4);
+stem(abs(hk));
+title('DFT of Second Sequence');
+xlabel('Discrete Frequency');
+ylabel('Amplitude');
+
+% Plot the linear convolution output
+subplot(3, 2, 5);
+stem(abs(y));
+title('Linear Convolution Output using DFT & IDFT');
+xlabel('Discrete Time');
+ylabel('Amplitude');
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+
+      <section>
+        <h2>Expected Output</h2>
+        <p>
+          The MATLAB code generates five plots:
+        </p>
+        <ol>
+          <li>
+            <strong>First Sequence (x(n)): </strong> The original input sequence x(n) is displayed in the first plot.
+          </li>
+          <li>
+            <strong>DFT of First Sequence: </strong> The second plot shows the magnitude of the DFT of x(n).
+          </li>
+          <li>
+            <strong>Second Sequence (h(n)): </strong> The original input sequence h(n) is shown in the third plot.
+          </li>
+          <li>
+            <strong>DFT of Second Sequence: </strong> The fourth plot shows the magnitude of the DFT of h(n).
+          </li>
+          <li>
+            <strong>Linear Convolution Output: </strong> The fifth plot represents the result of the linear convolution of x(n) and h(n) using DFT & IDFT.
+          </li>
+        </ol>
+        <p>
+          The plots validate the calculation of the linear convolution using the DFT and IDFT, showcasing the frequency-domain approach to convolution and its time-domain result.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Practical CheatSheet</p>
+    </footer>
+
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
