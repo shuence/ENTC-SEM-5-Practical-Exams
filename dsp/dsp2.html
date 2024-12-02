@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSP Practical - Experiment 2</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R70GKNMPMK"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-R70GKNMPMK");
+  </script>
+  <body>
+    <header>
+      <h1>DSP Practical - Experiment 2</h1>
+      <p class="subtitle">
+        To write and perform MATLAB program to calculate N-point DFT
+      </p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To write and perform a MATLAB program to calculate the N-point Discrete
+          Fourier Transform (DFT) for a given input sequence.
+        </p>
+      </section>
+
+      <section>
+        <h2>Problem Statement</h2>
+        <p>
+          Given the input sequence: 
+        </p>
+        <pre>
+          x(n) = [1 2 3 4]
+        </pre>
+        <p>
+          Calculate the 4-point DFT along with their amplitude and phase spectrum.
+        </p>
+      </section>
+
+      <section>
+        <h2>Theory</h2>
+        <p>
+          The Discrete Fourier Transform (DFT) is a mathematical transformation
+          used to analyze the frequency content of a discrete signal. The N-point
+          DFT of a sequence x(n) is given by:
+        </p>
+        <pre>
+          X(k) = sum (x(n) * exp(-j*2*pi*k*n/N)), where n = 0, 1, 2, ..., N-1
+        </pre>
+        <p>
+          The amplitude spectrum represents the magnitude of the DFT coefficients,
+          and the phase spectrum represents the phase of each coefficient.
+        </p>
+      </section>
+
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% MATLAB Code for Calculating N-point DFT
+
+clc;
+clear all;
+close all;
+
+% Input Parameters
+N = 4; % Point for DFT
+x = [1 2 3 4]; % Input sequence
+a = 0:N-1; % Frequency indices
+
+L = length(x); % Length of input sequence
+if N < L
+    error('N should be greater than or equal to length of x');
+end
+
+% Zero-padding if necessary
+x1 = [x, zeros(1, N - L)];
+
+% Calculating DFT using the formula
+for k = 0:N-1
+    for n = 0:N-1
+        p = exp(-1i * 2 * pi * n * k / N);
+        X(k+1, n+1) = p * x1(n+1); % Multiply with input sequence
+    end
+end
+
+% Calculate the DFT X[k]
+X = sum(X, 2); % Sum over n to get X(k)
+
+% Plotting the input sequence and DFT
+subplot(2, 1, 1);
+stem(a, x1(1:N));
+title('Input Sequence x(n)');
+xlabel('>a (Discrete Time)');
+ylabel('x(n) (Amplitude)');
+
+subplot(2, 1, 2);
+stem(a, abs(X)); % Amplitude Spectrum of DFT
+title('Amplitude Spectrum of DFT X[k]');
+xlabel('>a (Discrete Frequencies)');
+ylabel('|X(k)| (Amplitude)');
+
+% Phase Spectrum Plot
+subplot(2, 1, 2);
+stem(a, angle(X)); % Phase Spectrum of DFT
+title('Phase Spectrum of DFT X[k]');
+xlabel('>a (Discrete Frequencies)');
+ylabel('Phase of X(k)');
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+
+      <section>
+        <h2>Expected Output</h2>
+        <p>
+          The MATLAB code generates two plots:
+        </p>
+        <ol>
+          <li>
+            <strong>Input Sequence (x(n)): </strong> The original input sequence is displayed in the first plot.
+          </li>
+          <li>
+            <strong>Amplitude Spectrum of DFT (|X(k)|): </strong> The second plot shows the amplitude of the DFT coefficients.
+          </li>
+          <li>
+            <strong>Phase Spectrum of DFT (∠X(k)): </strong> The phase of each DFT coefficient is displayed.
+          </li>
+        </ol>
+        <p>
+          The amplitude spectrum indicates the magnitude of each frequency component, while the phase spectrum shows the phase shift of these components.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Practical CheatSheet</p>
+    </footer>
+
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
