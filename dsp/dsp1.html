@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSP Practical - Experiment 1</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R70GKNMPMK"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-R70GKNMPMK");
+  </script>
+  <body>
+    <header>
+      <h1>DSP Practical - Experiment 1</h1>
+      <p class="subtitle">
+        To study Discrete Systems represented with its Difference Equation
+      </p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To write and perform a MATLAB program to study the discrete systems
+          represented with its difference equation.
+        </p>
+      </section>
+
+      <section>
+        <h2>Problem Statement</h2>
+        <p>
+          For a given LTI system represented with its difference equation:
+        </p>
+        <pre>
+          y(n) = 0.5 * y(n-1) + x(n) + x(n-1), where x(n) = u(n)
+        </pre>
+        <p>
+          Find the system output for 0 ≤ n ≤ 50. Assume initial conditions:
+        </p>
+        <pre>
+          y(0) = 0, y(1) = 1
+        </pre>
+      </section>
+
+      <section>
+        <h2>Theory</h2>
+        <p>
+          The given system is a first-order difference equation with a feedback
+          term. The output at time n depends on the previous output value (y(n-1)),
+          the current input value (x(n)), and the previous input value (x(n-1)).
+        </p>
+        <p>
+          A common method to solve this type of system is to use the recursive
+          relationship provided in the equation and iterate over the time indices.
+        </p>
+      </section>
+
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% MATLAB Code for Discrete System using Difference Equation
+
+clc;
+clear all;
+close all;
+
+N = 50; % Number of samples
+a = 1:N+1; % Sample indices
+y(1) = 1; % Initial condition y(0) = 1
+u = ones(1, N+1); % Input signal (u(n) = 1 for all n)
+
+% Iterate to calculate output y(n)
+for n = 2:N+1
+    y(n) = 0.5 * y(n-1) + u(n) + u(n-1); % Difference equation
+end
+
+% Plot the input and output signals
+subplot(2, 1, 1);
+stem(a, u);
+title('System Input x(n) = u(n)');
+xlabel('--> a (Sample instants)');
+ylabel('--> u(n) (Amplitude)');
+
+subplot(2, 1, 2);
+stem(a, y);
+title('System Output y(n) for 0 <= n <= 50');
+xlabel('--> a (Sample instants)');
+ylabel('--> y(n) (Amplitude)');
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+
+      <section>
+        <h2>Expected Output</h2>
+        <p>
+          The MATLAB code generates two plots:
+        </p>
+        <ol>
+          <li>
+            <strong>System Input (x(n)): </strong> A constant input signal, u(n) = 1, plotted over the time range.
+          </li>
+          <li>
+            <strong>System Output (y(n)): </strong> The output of the system based on the recursive difference equation, showing how the system evolves over time.
+          </li>
+        </ol>
+        <p>
+          The plots will visually illustrate how the discrete-time system processes the input signal and produces an output.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Practical CheatSheet</p>
+    </footer>
+
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
