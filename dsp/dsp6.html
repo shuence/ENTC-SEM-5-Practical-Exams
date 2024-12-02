@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSP Practical - Experiment 6</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-R70GKNMPMK"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-R70GKNMPMK");
+  </script>
+  <body>
+    <header>
+      <h1>DSP Practical - Experiment 6</h1>
+      <p class="subtitle">
+        To design a Digital Butterworth Low-Pass Filter (LPF) using the Impulse Invariance Method
+      </p>
+    </header>
+    <main class="container">
+      <section>
+        <h2>Aim</h2>
+        <p>
+          To design a digital Butterworth low-pass filter with specific specifications using the Impulse Invariance Method.
+        </p>
+      </section>
+
+      <section>
+        <h2>Problem Statement</h2>
+        <p>
+          Design a digital Butterworth filter with the following specifications:
+        </p>
+        <pre>
+          0.8 <= |H(e^jw)| <= 1 (Passband)
+          |H(e^jw)| <= 0.2 (Stopband)
+        </pre>
+        <p>
+          Use the Impulse Invariance Method to design the filter with the following frequency range:
+        </p>
+        <pre>
+          0 <= w <= 0.2π (Passband)
+          0.6π <= w <= π (Stopband)
+        </pre>
+      </section>
+
+      <section>
+        <h2>Theory</h2>
+        <p>
+          The Butterworth filter is designed to have a flat frequency response in the passband, with no ripples. The Impulse Invariance Method is used to map the continuous-time filter design to a discrete-time filter. The key steps involved in the process are:
+        </p>
+        <ol>
+          <li>Determine the analog low-pass filter specifications based on the given passband and stopband frequencies.</li>
+          <li>Use the `buttord` function to calculate the filter order and cutoff frequency.</li>
+          <li>Design the analog Butterworth filter using the `butter` function.</li>
+          <li>Use the `impinvar` function to apply the Impulse Invariance Method and obtain the digital filter coefficients.</li>
+          <li>Plot the frequency response of the digital Butterworth filter using `freqz`.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>MATLAB Code</h2>
+        <textarea readonly>
+% MATLAB Code for Designing Digital Butterworth LPF using Impulse Invariance Method
+
+clc;
+clear all;
+close all;
+
+% Given Parameters
+T = 1;           % Sampling period
+Wp = 0.2 * pi;   % Passband frequency (rad/sample)
+Ws = 0.6 * pi;   % Stopband frequency (rad/sample)
+Op = Wp / T;     % Analog passband frequency
+Qs = Ws / T;     % Analog stopband frequency
+Sp = 0.8;        % Passband ripple
+Ss = 0.2;        % Stopband attenuation
+
+% Calculate the filter order and cutoff frequency using buttord
+Ap = -20 * log10(Sp);  % Passband attenuation
+As = -20 * log10(Ss);  % Stopband attenuation
+[N, CF] = buttord(Op, Qs, Ap, As, 's');  % Analog filter specifications
+
+% Design the analog Butterworth filter using butter
+[Bn, An] = butter(N, CF, 's');  % Analog filter coefficients
+Hs = tf(Bn, An);  % Analog transfer function
+
+% Apply Impulse Invariance Method to obtain the digital filter coefficients
+[B, A] = butter(N, CF, 's');  % Analog filter coefficients
+[num, den] = impinvar(B, A, 1/T);  % Digital filter coefficients
+
+% Create the digital transfer function
+Hz = tf(num, den, T);  % Digital transfer function
+
+% Frequency response of the digital Butterworth filter
+w = 0:0.1963:pi;  % Frequency range (0 to pi)
+Hw = freqz(num, den, w);  % Frequency response
+
+% Plot the magnitude response of the digital Butterworth LPF
+Hw_mag = abs(Hw);  % Magnitude of the frequency response
+plot(w/pi, Hw_mag, 'k');  % Plot magnitude response
+title('Magnitude Response of Butterworth Digital LPF Using Impulse Invariance', 'fontweight', 'b');
+xlabel('Normalized Frequency (w)', 'fontweight', 'b');
+ylabel('Linear Magnitude |H(e^jw)|', 'fontweight', 'b');
+        </textarea>
+        <button onclick="copyCode()">Copy Code</button>
+      </section>
+
+      <section>
+        <h2>Expected Output</h2>
+        <p>
+          The MATLAB code generates a plot of the magnitude response of the designed Butterworth digital low-pass filter. The expected output will display:
+        </p>
+        <ol>
+          <li>
+            The magnitude response of the filter, which will show a smooth, flat response in the passband and a sharp drop in the stopband, characteristic of a Butterworth filter.
+          </li>
+        </ol>
+        <p>
+          This plot helps visualize the performance of the designed filter and validates the design process using the Impulse Invariance Method.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Practical CheatSheet</p>
+    </footer>
+
+    <script>
+      function copyCode() {
+        const codeArea = document.querySelector("textarea");
+        codeArea.select();
+        document.execCommand("copy");
+        alert("Code copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>
